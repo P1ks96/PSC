@@ -4,7 +4,7 @@ import threading
 
 
 class Chat:
-    def __init__(self, host=socket.gethostname(), port=5000):
+    def __init__(self, host="0.0.0.0", port=6000):
         s = socket.socket(type=socket.SOCK_DGRAM)
         s.settimeout(0.5)
         s.bind((host, port))
@@ -16,7 +16,8 @@ class Chat:
             '/exit': self._exit,
             '/quit': self._quit,
             '/join': self._join,
-            '/send': self._send
+            '/send': self._send,
+            '/client': self._client
         }
         self.__running = True
         self.__address = None
@@ -72,6 +73,9 @@ class Chat:
                 pass
             except OSError:
                 return
+
+    def _client(self):
+        print(self.__address)
 
 
 if __name__ == '__main__':
